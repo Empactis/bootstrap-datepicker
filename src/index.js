@@ -703,7 +703,11 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
 
                     // Detect changes in the view from the text box
                     ngModel.$viewChangeListeners.push(function () {
-                        scope.date = dateParser.parse(ngModel.$viewValue, dateFormat, scope.date) || new Date(ngModel.$viewValue);
+                        if (!ngModel.$viewValue) {
+                            scope.date = new Date();
+                        } else {
+                            scope.date = dateParser.parse(ngModel.$viewValue, dateFormat, scope.date) || new Date(ngModel.$viewValue);
+                        }
                     });
 
                     var documentClickBind = function (event) {
